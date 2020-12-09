@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C372105-8AEF-4383-B1ED-87B850D668D8}</ProjectGuid>
+    <ProjectGuid>{D409C085-DCE0-4971-94D8-26C4A94C030E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_01_Challenge1CafeConsoleApp</RootNamespace>
-    <AssemblyName>01_Challenge1CafeConsoleApp</AssemblyName>
+    <RootNamespace>_02_Challenge2ClaimsConsoleApp</RootNamespace>
+    <AssemblyName>_02_Challenge2ClaimsConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,18 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProgramUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\01_Challenge1Cafe\01_Challenge1CafeRepo.csproj">
-      <Project>{0D133126-3EC0-4D3A-AD3B-BB90EAF34886}</Project>
-      <Name>01_Challenge1CafeRepo</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

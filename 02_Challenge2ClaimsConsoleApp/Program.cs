@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _01_Challenge1CafeConsoleApp
+namespace _02_Challenge2ClaimsConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            ProgramUI program = new ProgramUI();
-            program.Run();
         }
     }
 }
