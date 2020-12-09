@@ -10,6 +10,8 @@ namespace _02_Challenge2ClaimsConsoleApp
     {
         static void Main(string[] args)
         {
+            ProgramUI program = new ProgramUI();
+            program.Run();
         }
     }
 }
