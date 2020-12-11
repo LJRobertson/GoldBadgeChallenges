@@ -11,7 +11,6 @@ namespace _02_Challenge2ClaimsConsoleApp
     class ProgramUI
     {
         private ClaimRepo _claimRepo = new ClaimRepo();
-        Queue<Claim> claimsQueue = new Queue<Claim>();
 
         public void Run()
         {
@@ -28,7 +27,8 @@ namespace _02_Challenge2ClaimsConsoleApp
                     "\n1. View All Claims\n" +
                     "2. Process Next Claim\n" +
                     "3. Enter a New Claim\n" +
-                    "4. Exit");
+                    "4. View Claims Queue\n" +
+                    "5. Exit");
 
                 string input = Console.ReadLine();
 
@@ -40,12 +40,17 @@ namespace _02_Challenge2ClaimsConsoleApp
                         break;
                     case "2":
                         //Process Next Claim
+                        ProcessNextClaim();
                         break;
                     case "3":
                         //Enter a New Claim
                         CreateNewClaim();
                         break;
                     case "4":
+                        //Enter a New Claim
+                        ViewClaimsQueue();
+                        break;
+                    case "5":
                         Console.WriteLine("Thank you for using Komodo Claims Department Application. Goodbye!");
                         keepRunning = false;
                         break;
@@ -64,16 +69,61 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.Clear();
             List<Claim> listOfClaims = _claimRepo.GetClaimList();
 
-            Console.WriteLine({ -10} "ClaimID" +"Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid");
+            Console.WriteLine("ClaimID" + "Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid\n");
 
             foreach (Claim claim in listOfClaims)
             {
-                Console.WriteLine($"{claim.ClaimID, -10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid, -10}");
+                Console.WriteLine($"{claim.ClaimID,-10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid,-10}\n");
             }
             Console.ReadLine();
+        }
 
+        public void ViewClaimsQueue()//needs more work
+        {
+            Console.Clear();
+            Queue<Claim> queueOfClaims = _claimRepo.GetClaimQueue();
+
+            Console.WriteLine("ClaimID" + "Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid\n");
+
+            foreach (Claim claim in queueOfClaims)
+            {
+                Console.WriteLine($"{claim.ClaimID,-10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid,-10}\n");
+            }
+            Console.ReadLine();
+        }
+
+        public void ProcessNextClaim()
+        {
+            Console.Clear();
+
+            _claimRepo.GetClaimQueue();
+            Queue<Claim> claimQueue = _claimRepo.GetClaimQueue();
+            Claim nextClaim = claimQueue.Peek();
+
+            Console.WriteLine("Here are the details for the next claim to be handled:\n");
+
+            Console.WriteLine($"Claim ID: {nextClaim.ClaimID}\n" +
+                $"Description: { nextClaim.Description}\n" +
+                $"Amount: ${nextClaim.ClaimAmount}\n" +
+                $"DateOfAccident: {nextClaim.DateOfIncident}\n" +
+                $"DateOfClaim: {nextClaim.DateOfClaim}\n" +
+                $"IsValid: {nextClaim.IsValid}\n\n" +
+                $"Do you want to deal with this claim now (y/n)?");
+
+            string deal = Console.ReadLine().ToLower();
+            
+            if(deal == "y")
+            {
+                nextClaim = claimQueue.Dequeue();
+            }
+            else
+            {
+
+            }
+            
 
         }
+
         public void CreateNewClaim()
         {
             Console.Clear();
@@ -137,14 +187,14 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.WriteLine("Enter the dollar amount of the claim:");
             newClaim.ClaimAmount = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("What date did the incident occur? Format: YYYY, MM, DD");
+            Console.WriteLine("What date did the incident occur? Format: MM/DD/YYYY");
             newClaim.DateOfIncident = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("Today's date will automatically be used for the Date of Claim.");
             newClaim.DateOfClaim = DateTime.Now.Date;
 
             _claimRepo.CreateANewClaim(newClaim);
-            claimsQueue.Enqueue(newClaim);
+            _claimRepo.CreateANewClaimToQueue(newClaim);
         }
 
 
@@ -167,9 +217,9 @@ namespace _02_Challenge2ClaimsConsoleApp
             Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"), false);
             Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"), false);
 
-            claimsQueue.Enqueue(one);
-            claimsQueue.Enqueue(two);
-            claimsQueue.Enqueue(three);
+            _claimRepo.CreateANewClaimToQueue(one);
+            _claimRepo.CreateANewClaimToQueue(two);
+            _claimRepo.CreateANewClaimToQueue(three);
         }
     }
 }
