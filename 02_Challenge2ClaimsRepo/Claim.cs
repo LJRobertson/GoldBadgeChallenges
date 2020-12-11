@@ -17,6 +17,8 @@ namespace _02_Challenge2ClaimsRepo
         public DateTime DateOfClaim { get; set; }
         public bool IsValid { get; set; }
 
+        public Claim() { }
+
         public Claim(int claimID, TypeOfClaim claimType, string description, double claimAmount, DateTime dateOfIncident, DateTime dateOfClaim, bool isVlalid)
         {
             ClaimID = claimID;

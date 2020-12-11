@@ -11,9 +11,12 @@ namespace _02_Challenge2ClaimsConsoleApp
     class ProgramUI
     {
         private ClaimRepo _claimRepo = new ClaimRepo();
+        Queue<Claim> claimsQueue = new Queue<Claim>();
+
         public void Run()
         {
-            //SeedMenuList();
+            SeedClaimList();
+            SeedClaimQueue();
             Menu();
         }
         private void Menu()
@@ -33,6 +36,7 @@ namespace _02_Challenge2ClaimsConsoleApp
                 {
                     case "1":
                         //View All Claims
+                        ViewAllClaims();
                         break;
                     case "2":
                         //Process Next Claim
@@ -53,6 +57,22 @@ namespace _02_Challenge2ClaimsConsoleApp
                 Console.ReadKey();
                 Console.Clear();
             }
+        }
+
+        public void ViewAllClaims()//needs more work
+        {
+            Console.Clear();
+            List<Claim> listOfClaims = _claimRepo.GetClaimList();
+
+            Console.WriteLine({ -10} "ClaimID" +"Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid");
+
+            foreach (Claim claim in listOfClaims)
+            {
+                Console.WriteLine($"{claim.ClaimID, -10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid, -10}");
+            }
+            Console.ReadLine();
+
+
         }
         public void CreateNewClaim()
         {
@@ -89,8 +109,27 @@ namespace _02_Challenge2ClaimsConsoleApp
                     }
                 }
             }
-            Console.WriteLine("Enter the Claim Type:");
-            newClaim.ClaimType = TypeOfClaim.(Console.ReadLine());//cast?
+            Console.WriteLine("Enter the Claim Type: \n" +
+                "For Car Enter 1\n" +
+                "For Home Enter 2\n" +
+                "For Theft Enter 3");
+
+            string input = Console.ReadLine();
+            switch (input)
+            {
+                case "1":
+                    newClaim.ClaimType = TypeOfClaim.Car;
+                    break;
+                case "2":
+                    newClaim.ClaimType = TypeOfClaim.Home;
+                    break;
+                case "3":
+                    newClaim.ClaimType = TypeOfClaim.Theft;
+                    break;
+                default:
+                    Console.WriteLine("Your selection was invalid. Please enter 1, 2, or 3.");
+                    break;
+            }
 
             Console.WriteLine("Enter the claim description:");
             newClaim.Description = Console.ReadLine();
@@ -102,21 +141,35 @@ namespace _02_Challenge2ClaimsConsoleApp
             newClaim.DateOfIncident = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("Today's date will automatically be used for the Date of Claim.");
-            newClaim.DateOfClaim = DateTime.Now;
+            newClaim.DateOfClaim = DateTime.Now.Date;
 
             _claimRepo.CreateANewClaim(newClaim);
+            claimsQueue.Enqueue(newClaim);
         }
+
 
         //Seed List
         public void SeedClaimList()
         {
-            Claim one = new Claim(1, TypeOfClaim.Car, "crash on 465", 3000.00, "03/07/2016", "2016, 4, 8", true);
-            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, "07/08/2017", "2017, 11, 12", false);
-            Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, "012/011/2019", "2020, 25, 02", false);
+            Claim one = new Claim(1, TypeOfClaim.Car, "crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"), true);
+            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"), false);
+            Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"), false);
 
             _claimRepo.CreateANewClaim(one);
             _claimRepo.CreateANewClaim(two);
             _claimRepo.CreateANewClaim(three);
+        }
+
+        //Seed Queue
+        public void SeedClaimQueue()
+        {
+            Claim one = new Claim(1, TypeOfClaim.Car, "crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"), true);
+            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"), false);
+            Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"), false);
+
+            claimsQueue.Enqueue(one);
+            claimsQueue.Enqueue(two);
+            claimsQueue.Enqueue(three);
         }
     }
 }

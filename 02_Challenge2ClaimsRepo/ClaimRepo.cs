@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _02_Challenge2ClaimsRepo
 {
-    class ClaimRepo
+    public class ClaimRepo
     {
         private readonly List<Claim> _claimList = new List<Claim>();
 

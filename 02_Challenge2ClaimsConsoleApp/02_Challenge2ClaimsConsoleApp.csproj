@@ -7,7 +7,7 @@
     <ProjectGuid>{D409C085-DCE0-4971-94D8-26C4A94C030E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>_02_Challenge2ClaimsConsoleApp</RootNamespace>
-    <AssemblyName>_02_Challenge2ClaimsConsoleApp</AssemblyName>
+    <AssemblyName>02_Challenge2ClaimsConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -44,10 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\02_Challenge2ClaimsRepo\02_Challenge2ClaimsRepo.csproj">
+      <Project>{D4551673-F0C2-446F-AC29-6FD24D4F4C17}</Project>
+      <Name>02_Challenge2ClaimsRepo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
