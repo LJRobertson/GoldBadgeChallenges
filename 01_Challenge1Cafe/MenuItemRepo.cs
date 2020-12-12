@@ -22,28 +22,28 @@ namespace _01_Challenge1Cafe
             return _menuItemDirectory;
         }
 
-        //Update
-        public bool UpdateMenuItemInfo(int existingMenuNumber, MenuItem newMenuItem)
-        {
-            //find the menu item to update
-            MenuItem oldInfo = GetMenuItemByNumber(existingMenuNumber);
+        //Update -- not needed
+        //public bool UpdateMenuItemInfo(int existingMenuNumber, MenuItem newMenuItem)
+        //{
+        //    //find the menu item to update
+        //    MenuItem oldInfo = GetMenuItemByNumber(existingMenuNumber);
 
-            //update menu item
-            if (oldInfo != null)
-            {
-                oldInfo.MealNumber = newMenuItem.MealNumber;
-                oldInfo.MealName = newMenuItem.MealName;
-                oldInfo.Description = newMenuItem.Description;
-                oldInfo.Ingredients = newMenuItem.Ingredients;
-                oldInfo.Price = newMenuItem.Price;
+        //    //update menu item
+        //    if (oldInfo != null)
+        //    {
+        //        oldInfo.MealNumber = newMenuItem.MealNumber;
+        //        oldInfo.MealName = newMenuItem.MealName;
+        //        oldInfo.Description = newMenuItem.Description;
+        //        oldInfo.Ingredients = newMenuItem.Ingredients;
+        //        oldInfo.Price = newMenuItem.Price;
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         //Delete
         public bool RemoveMenuItemFromList(int mealNumber)

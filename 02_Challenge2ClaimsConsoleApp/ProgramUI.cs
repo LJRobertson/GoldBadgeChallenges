@@ -69,11 +69,23 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.Clear();
             List<Claim> listOfClaims = _claimRepo.GetClaimList();
 
-            Console.WriteLine("ClaimID" + "Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid\n");
+            string claimID = "Claim";
+            string type = "Type";
+            string description = "Description";
+            string amount = "Amount";
+            string dateOfAccident = "DateOfAccident";
+            string dateOfClaim = "DateOfClaim";
+            string isValid = "IsValid";
+
+            Console.WriteLine("{0,5} {1,-10} {2,-15} {3,-15} {4,-25} {5,-25} {6,-10}", claimID, type, description, amount, dateOfAccident, dateOfClaim, isValid);
+
+            //Console.WriteLine("claim = {0, -5}, claim");
 
             foreach (Claim claim in listOfClaims)
             {
-                Console.WriteLine($"{claim.ClaimID,-10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid,-10}\n");
+                Console.WriteLine("\n{0,5} {1,-10} {2,-15} {3,-15:C} {4,-25} {5,-25} {6,-10}", claim.ClaimID, claim.ClaimType, claim.Description, claim.ClaimAmount, claim.DateOfIncident.Date.ToShortDateString(), claim.DateOfClaim.Date.ToShortDateString(), claim.IsValid);
+
+                //Console.WriteLine($"\n{claim.ClaimID,5} {claim.ClaimType,-10} {claim.Description,-15} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date.ToShortDateString(),-25} {claim.DateOfClaim.Date.ToShortDateString(),-25} {claim.IsValid,-10}\n");
             }
             Console.ReadLine();
         }
@@ -83,16 +95,34 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.Clear();
             Queue<Claim> queueOfClaims = _claimRepo.GetClaimQueue();
 
-            Console.WriteLine("ClaimID" + "Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid\n");
+            string claimID = "Claim";
+            string type = "Type";
+            string description = "Description";
+            string amount = "Amount";
+            string dateOfAccident = "DateOfAccident";
+            string dateOfClaim = "DateOfClaim";
+            string isValid = "IsValid";
+
+            Console.WriteLine("{0,5} {1,-10} {2,-15} {3,-15} {4,-25} {5,-25} {6,-10}", claimID, type, description, amount, dateOfAccident, dateOfClaim, isValid);
 
             foreach (Claim claim in queueOfClaims)
             {
-                Console.WriteLine($"{claim.ClaimID,-10} {claim.ClaimType,-10} {claim.Description,-10} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid,-10}\n");
+                Console.WriteLine("\n{0,5} {1,-10} {2,-15} {3,-15:C} {4,-25} {5,-25} {6,-10}", claim.ClaimID, claim.ClaimType, claim.Description, claim.ClaimAmount, claim.DateOfIncident.Date.ToShortDateString(), claim.DateOfClaim.Date.ToShortDateString(), claim.IsValid);
+
+                //Console.WriteLine($"\n{claim.ClaimID,5} {claim.ClaimType,-10} {claim.Description,-15} ${claim.ClaimAmount,-10} {claim.DateOfIncident.Date.ToShortDateString(),-25} {claim.DateOfClaim.Date.ToShortDateString(),-25} {claim.IsValid,-10}\n");
             }
             Console.ReadLine();
+
+            //Console.WriteLine("ClaimID" + "Type" + "Description" + "Amount" + "DateOfAccident" + "DateOfClaim" + "IsValid\n");
+
+            //foreach (Claim claim in queueOfClaims)
+            //{
+            //    Console.WriteLine($"{claim.ClaimID,-10} {claim.ClaimType,-10} {claim.Description,-10}{claim.ClaimAmount,-10} {claim.DateOfIncident.Date,-10} {claim.DateOfClaim.Date,-10} {claim.IsValid,-10}\n");
+            //}
+            //Console.ReadLine();
         }
 
-        public void ProcessNextClaim()
+        public void ProcessNextClaim()//works!
         {
             Console.Clear();
 
@@ -111,20 +141,14 @@ namespace _02_Challenge2ClaimsConsoleApp
                 $"Do you want to deal with this claim now (y/n)?");
 
             string deal = Console.ReadLine().ToLower();
-            
-            if(deal == "y")
+
+            if (deal == "y")
             {
                 nextClaim = claimQueue.Dequeue();
             }
-            else
-            {
-
-            }
-            
-
         }
 
-        public void CreateNewClaim()
+        public void CreateNewClaim()//need to edit to remove list
         {
             Console.Clear();
             Claim newClaim = new Claim();
@@ -201,25 +225,25 @@ namespace _02_Challenge2ClaimsConsoleApp
         //Seed List
         public void SeedClaimList()
         {
-            Claim one = new Claim(1, TypeOfClaim.Car, "crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"), true);
-            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"), false);
-            Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"), false);
+            Claim one = new Claim(1, TypeOfClaim.Car, "Crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"));
+            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"));
+            Claim three = new Claim(3, TypeOfClaim.Theft, "Stolen ring", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"));
 
             _claimRepo.CreateANewClaim(one);
             _claimRepo.CreateANewClaim(two);
             _claimRepo.CreateANewClaim(three);
-        }
+        }//done
 
         //Seed Queue
         public void SeedClaimQueue()
         {
-            Claim one = new Claim(1, TypeOfClaim.Car, "crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"), true);
-            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"), false);
-            Claim three = new Claim(3, TypeOfClaim.Theft, "Video gaming system stolen", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"), false);
+            Claim one = new Claim(1, TypeOfClaim.Car, "Crash on 465", 3000.00, DateTime.Parse("03/17/2016"), DateTime.Parse("04/08/2016"));
+            Claim two = new Claim(2, TypeOfClaim.Home, "Water damage", 1000.00, DateTime.Parse("05/07/2016"), DateTime.Parse("11/11/2018"));
+            Claim three = new Claim(3, TypeOfClaim.Theft, "Stolen ring", 400.00, DateTime.Parse("12/24/2017"), DateTime.Parse("01/05/2018"));
 
             _claimRepo.CreateANewClaimToQueue(one);
             _claimRepo.CreateANewClaimToQueue(two);
             _claimRepo.CreateANewClaimToQueue(three);
-        }
+        }//done
     }
 }

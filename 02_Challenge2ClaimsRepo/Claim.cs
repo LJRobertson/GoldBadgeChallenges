@@ -15,11 +15,23 @@ namespace _02_Challenge2ClaimsRepo
         public  double ClaimAmount { get; set; }
         public DateTime DateOfIncident { get; set; }
         public DateTime DateOfClaim { get; set; }
-        public bool IsValid { get; set; }
+        public bool IsValid { 
+            get
+            {
+                TimeSpan dateDifference = this.DateOfClaim.Subtract(this.DateOfIncident);
+                if (dateDifference.Days <= 30) {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         public Claim() { }
 
-        public Claim(int claimID, TypeOfClaim claimType, string description, double claimAmount, DateTime dateOfIncident, DateTime dateOfClaim, bool isVlalid)
+        public Claim(int claimID, TypeOfClaim claimType, string description, double claimAmount, DateTime dateOfIncident, DateTime dateOfClaim)
         {
             ClaimID = claimID;
             ClaimType = claimType;
@@ -27,8 +39,6 @@ namespace _02_Challenge2ClaimsRepo
             ClaimAmount = claimAmount;
             DateOfIncident = dateOfIncident;
             DateOfClaim = dateOfClaim;
-            IsValid = isVlalid;
-          
         }
     }
 
