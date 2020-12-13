@@ -129,7 +129,7 @@ namespace _02_Challenge2ClaimsConsoleApp
                 }
                 else
                 {
-                    Claim tempNumber = _claimRepo.GetClaimByID(claimNumber);
+                    Claim tempNumber = _claimRepo.GetClaimByIDViaQueue(claimNumber);
                     if (tempNumber != null)
                     {
                         Console.WriteLine("This claim ID already exists. Please select a new ID.");
