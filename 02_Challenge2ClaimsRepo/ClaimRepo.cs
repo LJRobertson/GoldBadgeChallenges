@@ -34,15 +34,6 @@ namespace _02_Challenge2ClaimsRepo
             return _claimsQueue;
         }
 
-        //Is Valid
-        public void IsValid()
-        {
-
-        }
-        
-
-        //Delete
-        
 
         //Get By Number
         public Claim GetClaimByID(int claimNumber)
