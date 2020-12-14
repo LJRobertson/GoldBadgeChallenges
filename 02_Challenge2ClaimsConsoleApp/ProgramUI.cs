@@ -1,4 +1,4 @@
-﻿using _02_Challenge2ClaimsRepo;
+﻿  using _02_Challenge2ClaimsRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,14 +125,14 @@ namespace _02_Challenge2ClaimsConsoleApp
 
                 if (claimNumber <= 0)
                 {
-                    Console.WriteLine("The claim ID must be numeric and greater than zero.");
+                    Console.WriteLine("\nThe claim ID must be numeric and greater than zero.");
                 }
                 else
                 {
                     Claim tempNumber = _claimRepo.GetClaimByIDViaQueue(claimNumber);
                     if (tempNumber != null)
                     {
-                        Console.WriteLine("This claim ID already exists. Please select a new ID.");
+                        Console.WriteLine("\nThis claim ID already exists. Please select a new ID.");
                     }
                     else
                     {
@@ -141,7 +141,7 @@ namespace _02_Challenge2ClaimsConsoleApp
                     }
                 }
             }
-            Console.WriteLine("Enter the Claim Type: \n" +
+            Console.WriteLine("\nEnter the Claim Type: \n" +
                 "For Car Enter 1\n" +
                 "For Home Enter 2\n" +
                 "For Theft Enter 3");
@@ -163,17 +163,27 @@ namespace _02_Challenge2ClaimsConsoleApp
                     break;
             }
 
-            Console.WriteLine("Enter the claim description:");
+            Console.WriteLine("\nEnter the claim description:");
             newClaim.Description = Console.ReadLine();
 
-            Console.WriteLine("Enter the dollar amount of the claim:");
+            Console.WriteLine("\nEnter the dollar amount of the claim:");
             newClaim.ClaimAmount = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("What date did the incident occur? Format: MM/DD/YYYY");
+            Console.WriteLine("\nWhat date did the incident occur? Format: MM/DD/YYYY");
             newClaim.DateOfIncident = DateTime.Parse(Console.ReadLine());
 
-            Console.WriteLine("Today's date will automatically be used for the Date of Claim.");
+            Console.WriteLine("\nToday's date will automatically be used for the Date of Claim.");
             newClaim.DateOfClaim = DateTime.Now.Date;
+
+            if (newClaim.IsValid == true)
+            {
+                Console.WriteLine($"\nThis claim is valid.");
+            }
+            else
+            {
+                Console.WriteLine("\nThis claim is not valid.");
+            }
+            
 
             _claimRepo.CreateANewClaimToQueue(newClaim);
         }

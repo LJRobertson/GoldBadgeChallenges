@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace _03_Challenge3BadgesConsoleApp
 {
-    class Program
+    class ProgramUI
     {
-        static void Main(string[] args)
+        public void Run()
         {
-            ProgramUI program = new ProgramUI();
-            program.Run();
+            //SeedClaimQueue();
+            Menu();
+        }
+        private void Menu()
+        {
         }
     }
 }
