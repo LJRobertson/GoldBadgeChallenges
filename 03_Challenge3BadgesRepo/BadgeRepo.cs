@@ -29,27 +29,23 @@ namespace _03_Challenge3BadgesRepo
         }
 
         //Update
-        public bool UpdateBadgeDoors(int existingBadgeID, string doorString)
+        public bool UpdateDoorsOnBadge(int badgeNumber, string doorsString)
         {
-            Badge badgeItem = GetBadgeByIDNumber(existingBadgeID);
+            Badge badgeItem = GetBadgeByIDNumber(badgeNumber);
             if (badgeItem == null)
             {
                 return false;
             }
 
-            //create a list -- new list to replace what badge already has
-            List<string> doorList = new List<string>();
-
-            //add items to list
-            string[] doorArray = doorString.Split(',');
+            List<string> doorNames = new List<string>();
+            string[] doorArray = doorsString.Split(',');
 
             foreach (string door in doorArray)
             {
-                doorList.Add(door.Trim());
+                doorNames.Add(door.Trim());
             }
 
-            //assign the list to the badge object
-            badgeItem.DoorNamesList = doorList;
+            badgeItem.DoorNamesList = doorNames;
             return true;
         }
 
