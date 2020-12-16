@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _03_Challenge3BadgesRepo
 {
-    class BadgeRepo
+    public class BadgeRepo
     {
         public Dictionary<int, Badge> _dictionaryBadges = new Dictionary<int, Badge>();
 
@@ -49,7 +49,7 @@ namespace _03_Challenge3BadgesRepo
             return true;
         }
 
-        //Delete All Doors on Existing Badge -- this currently deletes a badge need to configure to delete a door
+        //Delete All Doors on Existing Badge
         public bool RemoveDoorsFromBadge(int badgeNumber)
         {
             Badge badgeItem = GetBadgeByIDNumber(badgeNumber);
