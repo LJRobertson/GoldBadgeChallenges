@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _03_Challenge3BadgesRepo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -42,21 +43,18 @@ namespace _03_Challenge3BadgesTests
             Assert.IsNotNull(badgeFromRepo);
         }
 
-        //Read Method Test -- NEED ASSISTANCE - why does this not recognize the dictionary?
-        //[TestMethod]
-        //public void ReturnBadgeDictionary_ShouldBeNotNull() //NEED HELP
-        //{
-        //    //Arrange
-        //    Dictionary<int, Badge> testDictionary = _repo.GetBadges();
-        //    //Act
-            
-        //    //new Dictionary<int, Badge> testDictionary = _repo.GetBadges();
+        //Read Method Test -- DONE
+        [TestMethod]
+        public void ReturnBadgeDictionary_ShouldBeNotNull() // -- DONE
+        {
+            //Arrange
+            Dictionary<int, Badge> testDictionary = new Dictionary<int, Badge>();
+            //Act
+            testDictionary = _repo.GetBadges();
 
-        //            //public Dictionary<int, Badge> _dictionaryBadges = new Dictionary<int, Badge>();
-
-        //    //Assert
-        //    Assert.IsNotNull(testDictionary);
-        //}
+            //Assert
+            Assert.IsNotNull(testDictionary);
+        }
 
         //Update Doors on a Badge Test -- DONE
         [TestMethod]
@@ -69,6 +67,20 @@ namespace _03_Challenge3BadgesTests
 
             //Assert
             Assert.AreEqual(4, _badge.DoorNamesList.Count);
+        }
+
+        //Update -- Add Doors on a Badge w/o deleting Test -- DONE
+        [TestMethod]
+        public void AddDoorsToBadgeShouldBeEqual() //-- DONE
+        {
+            //Arrange
+            _repo.UpdateDoorsOnBadge(101, "12,14,16,18");
+
+            //Act
+            _repo.AddDoorsToBadge(101, "1, 2, 3");
+
+            //Assert
+            Assert.AreEqual(7, _badge.DoorNamesList.Count);
         }
 
         //Delete Method Test
@@ -95,6 +107,20 @@ namespace _03_Challenge3BadgesTests
 
             //Act
             Badge badge = _repo.GetBadgeByIDNumber(101);
+            int badgeNumber = badge.BadgeID;
+
+            //Assert
+            Assert.AreEqual(101, badgeNumber);
+        }
+
+        //Get By Number Method Using Try Get Value Test -- DONE
+        [TestMethod]
+        public void GetBadgeByIDTryGetValue_ShouldBeEqual() //--DONE 
+        {
+            //Arrange
+
+            //Act
+            Badge badge = _repo.GetBadgeByIDNumberTryGetValue(101);
             int badgeNumber = badge.BadgeID;
 
             //Assert
