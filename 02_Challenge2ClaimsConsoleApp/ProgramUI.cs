@@ -22,7 +22,11 @@ namespace _02_Challenge2ClaimsConsoleApp
             bool keepRunning = true;
             while (keepRunning)
             {
-                Console.WriteLine("Welcome to the Komodo Claims Department Application. \nPlease choose from the following options:\n" +
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Welcome to the Komodo Claims Department Application. \n");
+                Console.ResetColor();
+
+                Console.WriteLine("Please choose from the following options:\n" +
                     "\n1. View All Claims\n" +
                     "2. Process Next Claim\n" +
                     "3. Enter a New Claim\n" +
@@ -45,7 +49,10 @@ namespace _02_Challenge2ClaimsConsoleApp
                         CreateNewClaim();
                         break;
                     case "4":
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Thank you for using Komodo Claims Department Application. Goodbye!");
+                        Console.ResetColor();
                         keepRunning = false;
                         break;
                     default:
@@ -63,19 +70,13 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.Clear();
             Queue<Claim> queueOfClaims = _claimRepo.GetClaimQueue();
 
-            string claimID = "Claim";
-            string type = "Type";
-            string description = "Description";
-            string amount = "Amount";
-            string dateOfAccident = "DateOfAccident";
-            string dateOfClaim = "DateOfClaim";
-            string isValid = "IsValid";
-
-            Console.WriteLine("{0,5} {1,-10} {2,-15} {3,-15} {4,-25} {5,-25} {6,-10}", claimID, type, description, amount, dateOfAccident, dateOfClaim, isValid);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Claim".PadRight(10) + "Type".PadRight(10) + "Description".PadRight(20) + "Amount".PadRight(15) + "dateOfAccident".PadRight(20) + "DateOfClaim".PadRight(20) + "IsValid");
+            Console.ResetColor();
 
             foreach (Claim claim in queueOfClaims)
             {
-                Console.WriteLine("\n{0,5} {1,-10} {2,-15} {3,-15:C} {4,-25} {5,-25} {6,-10}", claim.ClaimID, claim.ClaimType, claim.Description, claim.ClaimAmount, claim.DateOfIncident.Date.ToShortDateString(), claim.DateOfClaim.Date.ToShortDateString(), claim.IsValid);
+                Console.WriteLine("\n" + claim.ClaimID.ToString().PadRight(10) + claim.ClaimType.ToString().PadRight(10) + claim.Description.PadRight(20) + "$" + claim.ClaimAmount.ToString("0.00").PadRight(15) + claim.DateOfIncident.Date.ToShortDateString().PadRight(20) + claim.DateOfClaim.Date.ToShortDateString().PadRight(20) + claim.IsValid);
             }
             Console.ReadLine();
         }
@@ -88,19 +89,24 @@ namespace _02_Challenge2ClaimsConsoleApp
             Queue<Claim> claimQueue = _claimRepo.GetClaimQueue();
             Claim nextClaim = claimQueue.Peek();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Here are the details for the next claim to be handled:\n");
+            Console.ResetColor();
 
             Console.WriteLine($"Claim ID: {nextClaim.ClaimID}\n" +
                 $"Description: { nextClaim.Description}\n" +
                 $"Amount: ${nextClaim.ClaimAmount}\n" +
                 $"DateOfAccident: {nextClaim.DateOfIncident.Date.ToShortDateString()}\n" +
                 $"DateOfClaim: {nextClaim.DateOfClaim.Date.ToShortDateString()}\n" +
-                $"IsValid: {nextClaim.IsValid}\n\n" +
-                $"Do you want to deal with this claim now (y/n)?");
+                $"IsValid: {nextClaim.IsValid}\n\n");
 
-            string deal = Console.ReadLine().ToLower();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Do you want to deal with this claim now (y/n)?");
+            Console.ResetColor();
 
-            if (deal == "y")
+            string dealWith = Console.ReadLine().ToLower();
+
+            if (dealWith == "y")
             {
                 nextClaim = claimQueue.Dequeue();
             }
@@ -110,6 +116,10 @@ namespace _02_Challenge2ClaimsConsoleApp
         {
             Console.Clear();
             Claim newClaim = new Claim();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Creating a New Claim\n");
+            Console.ResetColor();
 
             bool endErrorCheck = false;
             while (endErrorCheck == false)
@@ -132,7 +142,9 @@ namespace _02_Challenge2ClaimsConsoleApp
                     Claim tempNumber = _claimRepo.GetClaimByIDViaQueue(claimNumber);
                     if (tempNumber != null)
                     {
-                        Console.WriteLine("\nThis claim ID already exists. Please select a new ID.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nThis claim ID already exists. Please select a new ID.\n");
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -159,7 +171,9 @@ namespace _02_Challenge2ClaimsConsoleApp
                     newClaim.ClaimType = TypeOfClaim.Theft;
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Your selection was invalid. Please enter 1, 2, or 3.");
+                    Console.ResetColor();
                     break;
             }
 
@@ -167,7 +181,7 @@ namespace _02_Challenge2ClaimsConsoleApp
             newClaim.Description = Console.ReadLine();
 
             Console.WriteLine("\nEnter the dollar amount of the claim:");
-            newClaim.ClaimAmount = int.Parse(Console.ReadLine());
+            newClaim.ClaimAmount = double.Parse(Console.ReadLine());
 
             Console.WriteLine("\nWhat date did the incident occur? Format: MM/DD/YYYY");
             newClaim.DateOfIncident = DateTime.Parse(Console.ReadLine());
@@ -177,15 +191,23 @@ namespace _02_Challenge2ClaimsConsoleApp
 
             if (newClaim.IsValid == true)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\nThis claim is valid.");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nThis claim is not valid.");
+                Console.ResetColor();
             }
             
-
             _claimRepo.CreateANewClaimToQueue(newClaim);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"\nThis claim has been added to the queue.");
+            Console.ResetColor();
+            Console.ReadLine();
         }
 
         public void SeedClaimQueue()

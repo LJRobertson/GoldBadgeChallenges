@@ -13,7 +13,6 @@ namespace _03_Challenge3BadgesRepo
 
         public Badge() { }
 
-
         public Badge(int badgeID) 
         {
             BadgeID = badgeID;

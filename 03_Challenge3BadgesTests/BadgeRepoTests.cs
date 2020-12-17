@@ -9,43 +9,35 @@ namespace _03_Challenge3BadgesTests
     public class BadgeRepoTests
     {
 
-        private BadgeRepo _repo; //declare
+        private BadgeRepo _repo;
         private Badge _badge;
 
         [TestInitialize]
         public void Arrange()
         {
-            _repo = new BadgeRepo(); //initializing 
+            _repo = new BadgeRepo(); 
             _badge = new Badge(101);
 
             _repo.CreateNewBadge(101, _badge);
         }
 
-        //create a new badge -- Done
-        //Read
-        //Update doors on a badge -- Done
-        //Delete Doors
-        //delete badge
-        //get methdod -- DONE
-
-
-        //Create Test -- DONE
+        //Create Test
         [TestMethod]
-        public void CreateNewBadge_ShouldGetNotNull() //-- DONE
+        public void CreateNewBadge_ShouldGetNotNull()
         {
             //Arrange
 
             //Act
             _repo.CreateNewBadge(102,_badge);
-            Badge badgeFromRepo = _repo.GetBadgeByIDNumber(102);
+            Badge badgeFromRepo = _repo.GetBadgeByIDNumberTryGetValue(102);
 
             //Assert
             Assert.IsNotNull(badgeFromRepo);
         }
 
-        //Read Method Test -- DONE
+        //Read Method Test
         [TestMethod]
-        public void ReturnBadgeDictionary_ShouldBeNotNull() // -- DONE
+        public void ReturnBadgeDictionary_ShouldBeNotNull()
         {
             //Arrange
             Dictionary<int, Badge> testDictionary = new Dictionary<int, Badge>();
@@ -56,9 +48,9 @@ namespace _03_Challenge3BadgesTests
             Assert.IsNotNull(testDictionary);
         }
 
-        //Update Doors on a Badge Test -- DONE
+        //Update Doors on a Badge Test
         [TestMethod]
-        public void UpdateDoorsOnBadgeShouldBeEqual() //-- DONE
+        public void UpdateDoorsOnBadgeShouldBeEqual()
         {
             //Arrange
            
@@ -69,9 +61,9 @@ namespace _03_Challenge3BadgesTests
             Assert.AreEqual(4, _badge.DoorNamesList.Count);
         }
 
-        //Update -- Add Doors on a Badge w/o deleting Test -- DONE
+        //Update Select Doors
         [TestMethod]
-        public void AddDoorsToBadgeShouldBeEqual() //-- DONE
+        public void AddDoorsToBadgeShouldBeEqual()
         {
             //Arrange
             _repo.UpdateDoorsOnBadge(101, "12,14,16,18");
@@ -85,7 +77,7 @@ namespace _03_Challenge3BadgesTests
 
         //Delete Method Test
         [TestMethod]
-        public void DeleteDoorsFromBadgeTestShouldReturnTrue()// -- DONE
+        public void DeleteDoorsFromBadgeTestShouldReturnTrue()
         {
             //Arrage
             _repo.UpdateDoorsOnBadge(101, "2,3,4");
@@ -98,24 +90,24 @@ namespace _03_Challenge3BadgesTests
             Assert.IsTrue(doorsOnBadge = true);
         }
 
-
-        //Get By Number Method Test -- DONE
+        //Delete Selected Door Method Test
         [TestMethod]
-        public void GetBadgeByID_ShouldBeEqual() //-- DONE
+        public void RemoveSelectedDoorsFromBadgeTestShouldReturnTrue()
         {
-            //Arrange
-
+            //Arrage
+            _repo.UpdateDoorsOnBadge(101, "2,3,4");
+            int initialCount = _badge.DoorNamesList.Count;
             //Act
-            Badge badge = _repo.GetBadgeByIDNumber(101);
-            int badgeNumber = badge.BadgeID;
+            _repo.RemoveSelectedDoorsFromBadge(101, "2,4");
+            int resultCount = _badge.DoorNamesList.Count;
 
             //Assert
-            Assert.AreEqual(101, badgeNumber);
+            Assert.IsTrue(initialCount > resultCount);
         }
 
-        //Get By Number Method Using Try Get Value Test -- DONE
+        //Get By Number Method Using Try Get Value Test
         [TestMethod]
-        public void GetBadgeByIDTryGetValue_ShouldBeEqual() //--DONE 
+        public void GetBadgeByIDTryGetValue_ShouldBeEqual() 
         {
             //Arrange
 

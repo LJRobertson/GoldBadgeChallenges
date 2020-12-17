@@ -8,21 +8,20 @@ namespace _01_Challenge1CafeTests
     [TestClass]
     public class CafeRepoTests
     {
-        private MenuItemRepo _repo; //declare
+        private MenuItemRepo _repo; 
         private MenuItem _item;
 
         [TestInitialize]
         public void Arrange()
         {
-            _repo = new MenuItemRepo(); //initializing 
+            _repo = new MenuItemRepo();  
             _item = new MenuItem(1, "Sub Sandwhich", "sub sandwhich and chips", "bread, turkey, cheese, lettuce, tomato", 9.95);
             
             _repo.AddMenuItemToList(_item);
         }
 
-        //Create Method Test -- DONE
         [TestMethod]
-        public void AddToList_ShouldGetNotNull()//passes
+        public void AddToList_ShouldGetNotNull()
         {
             //Arrange
             MenuItem item = new MenuItem();
@@ -37,26 +36,23 @@ namespace _01_Challenge1CafeTests
             Assert.IsNotNull(itemFromRepo);
         }
 
-        
-        //Read Method Test -- DONE
         [TestMethod]
-        public void ReturnItemList_ShouldBeNotNull()// passes
+        public void ReturnItemList_ShouldBeNotNull()
         {
             //Arrange
-            //Act
 
+            //Act
             List<MenuItem> testList = _repo.GetMenuList();
             
             //Assert
             Assert.IsNotNull(testList);
         }
 
-
-        //Delete Method Test -- DONE
         [TestMethod]
-        public void DeleteItem_ShouldReturnTrue()//passes
+        public void DeleteItem_ShouldReturnTrue()
         {
-            //Arrange in in the initialize
+            //Arrange
+
             //Act
             bool deleteItem = _repo.RemoveMenuItemFromList(_item.MealNumber);
 
@@ -64,12 +60,11 @@ namespace _01_Challenge1CafeTests
             Assert.IsTrue(deleteItem);
         }
 
-        //Get By Number Method Test -- DONE
-
         [TestMethod]
-        public void GetMenuItemByNumber_ShouldBeEqual()// passes
+        public void GetMenuItemByNumber_ShouldBeEqual()
         {
             // Arrange
+
             //Act
             MenuItem item = _repo.GetMenuItemByNumber(1);
             int mealNumber = item.MealNumber;
@@ -77,6 +72,5 @@ namespace _01_Challenge1CafeTests
             //Assert
             Assert.AreEqual(1, mealNumber);
         }
-
     }
 }

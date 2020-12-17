@@ -10,12 +10,6 @@ namespace _03_Challenge3BadgesRepo
     {
         public Dictionary<int, Badge> _dictionaryBadges = new Dictionary<int, Badge>();
 
-        //Create a new Badge
-        //Update Doors on Existing Badge
-        //Delete All Doors on Existing Badge
-        //Show a list with all badge numbers and door access
-
-
         //Create
         public void CreateNewBadge(int badgeID, Badge badgeItem)
         {
@@ -49,8 +43,8 @@ namespace _03_Challenge3BadgesRepo
             return true;
         }
 
-        //Update - Adding Doors to List without Deleting Existing Doors -- IN PROGRESS
-        public bool AddDoorsToBadge(int badgeNumber, string doorsString) //-- IN PROGRESS
+        //Update
+        public bool AddDoorsToBadge(int badgeNumber, string doorsString)
         {
             Badge badgeItem = GetBadgeByIDNumberTryGetValue(badgeNumber);
             if (badgeItem == null)
@@ -65,11 +59,10 @@ namespace _03_Challenge3BadgesRepo
             {
                 badgeItem.DoorNamesList.Add(door.Trim());
             }
-
             return true;
         }
 
-        //Delete All Doors on Existing Badge
+        //Delete
         public bool RemoveDoorsFromBadge(int badgeNumber)
         {
             Badge badgeItem = GetBadgeByIDNumberTryGetValue(badgeNumber);
@@ -82,28 +75,30 @@ namespace _03_Challenge3BadgesRepo
             return true;
         }
 
-        //Delete Single Door on Existing Badge
-        public bool RemoveSingleDoorFromBadge(int badgeNumber, string doorNumber)
+        //Delete
+        public bool RemoveSelectedDoorsFromBadge(int badgeNumber, string doorNumber) //Done
         {
             Badge badgeItem = GetBadgeByIDNumberTryGetValue(badgeNumber);
-            if (badgeItem == null || badgeItem.DoorNamesList.Contains(doorNumber) == false)
+            if (badgeItem == null)
             {
                 return false;
             }
+            List<string> updatedDoors = badgeItem.DoorNamesList;
+            string[] doorArray = doorNumber.Trim().Split(',');
 
-            //if (badgeItem.DoorNamesList.Contains(doorNumber))
-            
-                badgeItem.DoorNamesList.Remove(doorNumber);
-                return true;
-            
-
+            foreach (string doorToDelete in doorArray)
+            {
+                updatedDoors.Remove(doorToDelete.Trim());
+            }
+            badgeItem.DoorNamesList = updatedDoors;
+            return true;
         }
 
         //Delete Badge -- not required
         public bool RemoveBadge(int badgeNumber) // -- may not need this, but the functionality is here
         {
             Badge badgeItem = GetBadgeByIDNumberTryGetValue(badgeNumber);
-            if (badgeNumber == null)
+            if (badgeItem == null)
             {
                 return false;
             }
@@ -121,14 +116,7 @@ namespace _03_Challenge3BadgesRepo
             }
         }
 
-        //Get By Number -- May be able to delete this... replaced with GetBadgeByIDNumberTryGetValue
-        public Badge GetBadgeByIDNumber(int badgeNumber)
-        {
-            Badge badgeItem = _dictionaryBadges[badgeNumber];
-            return badgeItem;
-        }
-
-        //Get By Number -- using TryGetValue
+        //Get By Number
         public Badge GetBadgeByIDNumberTryGetValue(int badgeNumber)
         {
             Badge badge;
