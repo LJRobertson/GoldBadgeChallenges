@@ -11,7 +11,6 @@ namespace _01_Challenge1CafeConsoleApp
     {
         private MenuItemRepo _menuItemRepo = new MenuItemRepo();
 
-
         public void Run()
         {
             SeedMenuList();
@@ -31,10 +30,10 @@ namespace _01_Challenge1CafeConsoleApp
                     "\n1. View All Menu Items\n" +
                     "2. Add New Menu Item\n" +
                     "3. Delete Menu Item\n" +
-                    "4. Exit");
+                    "4. Exit Application\n\n" +
+                    "Please enter your selection:");
 
                 string input = Console.ReadLine();
-
                 switch (input)
                 {
                     case "1":
@@ -49,7 +48,7 @@ namespace _01_Challenge1CafeConsoleApp
                     case "4":
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Thank you for using Komodo Cafe Management Application. Goodbye!");
+                        Console.WriteLine("Thank you for using Komodo Cafe Management Application. Goodbye!\n");
                         Console.ResetColor();
 
                         keepRunning = false;
@@ -72,7 +71,7 @@ namespace _01_Challenge1CafeConsoleApp
             List<MenuItem> listOfMenuItems = _menuItemRepo.GetMenuList();
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("The Komodo Cafe Menu");
+            Console.WriteLine("The Komodo Cafe Menu\n");
             Console.ResetColor();
             Console.WriteLine("Our current menu offerings are:\n");
 
@@ -81,10 +80,10 @@ namespace _01_Challenge1CafeConsoleApp
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Meal Number: {item.MealNumber} -- {item.MealName}");
                 Console.ResetColor();
-
+                
                 Console.WriteLine($"Description: {item.Description}\n" +
-                    $"Ingredients: {item.Ingredients}\n" +
-                    $"Price: ${item.Price.ToString("0.00")}\n");
+                    $"Ingredients: {string.Join(", ", item.Ingredients.ToArray())}" +
+                    $"\nPrice: ${item.Price.ToString("0.00")}\n");
             }
         }
 
@@ -92,7 +91,7 @@ namespace _01_Challenge1CafeConsoleApp
         {
             Console.Clear();
             MenuItem newItem = new MenuItem();
-
+          
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Adding a New Menu Item");
             Console.ResetColor();
@@ -109,7 +108,8 @@ namespace _01_Challenge1CafeConsoleApp
                     menuNumber = result;
                 }
 
-                if(menuNumber <= 0){
+                if (menuNumber <= 0)
+                {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nThe meal number must be numeric and greater than zero.\n");
                     Console.ResetColor();
@@ -120,7 +120,7 @@ namespace _01_Challenge1CafeConsoleApp
                     if (tempNumber != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nThis meal number already exists.\n");
+                        Console.WriteLine("\nThis meal number already exists. Please use a different number.\n");
                         Console.ResetColor();
                     }
                     else
@@ -137,8 +137,14 @@ namespace _01_Challenge1CafeConsoleApp
             Console.WriteLine("\nEnter new meal description:");
             newItem.Description = Console.ReadLine();
 
-            Console.WriteLine("\nEnter new meal ingredients:");
-            newItem.Ingredients = Console.ReadLine();
+            Console.WriteLine("\nEnter new meal ingredients. Each ingredient needs to be separated by a comma.");
+            string ingredients = Console.ReadLine();
+
+            string[] ingredientArray = ingredients.Split(',');
+            foreach (string ingredient in ingredientArray)
+            {
+                newItem.Ingredients.Add(ingredient);
+            }
 
             Console.WriteLine("\nEnter new meal price (format: 0.00):");
             newItem.Price = double.Parse(Console.ReadLine());
@@ -149,7 +155,7 @@ namespace _01_Challenge1CafeConsoleApp
             Console.WriteLine("\nThe item was successfully added to the menu.\n");
             Console.ResetColor();
         }
-    
+
         public void DeleteMenuItems()
         {
             Console.Clear();
@@ -158,8 +164,8 @@ namespace _01_Challenge1CafeConsoleApp
             Console.ResetColor();
 
             Console.WriteLine("\nOur current menu offerings are:\n");
-            List<MenuItem> listOfMenuItems = _menuItemRepo.GetMenuList();
 
+            List<MenuItem> listOfMenuItems = _menuItemRepo.GetMenuList();
             foreach (MenuItem item in listOfMenuItems)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -168,31 +174,35 @@ namespace _01_Challenge1CafeConsoleApp
                 Console.WriteLine($"Description: {item.Description}\n");
             }
 
-            Console.WriteLine("Enter the ID Number of the menu item to be deleted:");
-
-            int input = int.Parse(Console.ReadLine());
-
-            bool wasDeleted = _menuItemRepo.RemoveMenuItemFromList(input);
-            if (wasDeleted)
+            bool errorCheck = true;
+            while (errorCheck == true)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("The item was successfully deleted.");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nThe item could not be deleted.\n");
-                Console.ResetColor();
+                Console.WriteLine("Enter the ID Number of the menu item to be deleted:");
+                int input = int.Parse(Console.ReadLine());
+
+                bool wasDeleted = _menuItemRepo.RemoveMenuItemFromList(input);
+                if (wasDeleted)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nThe item was successfully deleted.\n");
+                    Console.ResetColor();
+                    errorCheck = false;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nThe item could not be deleted.\n");
+                    Console.ResetColor();
+                }
             }
         }
 
         public void SeedMenuList()
         {
-            MenuItem burger = new MenuItem(1, "Cheeseburger", "Classic cheeseburger and fries", "bun, beef, cheese, lettuce, tomato, fries", 5.95);
-            MenuItem tenders = new MenuItem(2, "Chicken Tenders", "Tenders and fries", "chicken, fries", 4.95);
-            MenuItem caesar = new MenuItem(3, "Caesar Salad", "Caesar salad and toast - it's almost healthy", "romaine lettuce, caesar dressing, parmesean cheese, toasted baguette", 6.50);
-            MenuItem nachos = new MenuItem(4, "Nachos", "Cheese 'n' Chips", "tortilla chips, nacho cheese, jalapenos", 4.50);
+            MenuItem burger = new MenuItem(1, "Cheeseburger", "Classic cheeseburger and fries", new List<string> { "bun", "beef", "cheese", "lettuce", "tomato", "fries" }, 5.95);
+            MenuItem tenders = new MenuItem(2, "Chicken Tenders", "Tenders and fries", new List<string> { "chicken", "fries" }, 4.95);
+            MenuItem caesar = new MenuItem(3, "Caesar Salad", "Caesar salad and toast - it's almost healthy", new List<string> { "romaine lettuce", "caesar dressing", "parmesean cheese", "toasted baguette" }, 6.50);
+            MenuItem nachos = new MenuItem(4, "Nachos", "Cheese 'n' Chips", new List<string> { "tortilla chips", "nacho cheese", "jalapenos" }, 4.50);
 
             _menuItemRepo.AddMenuItemToList(burger);
             _menuItemRepo.AddMenuItemToList(tenders);

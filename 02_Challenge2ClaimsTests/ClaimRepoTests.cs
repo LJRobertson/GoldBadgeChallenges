@@ -20,7 +20,6 @@ namespace _02_Challenge2ClaimsTests
             _repo.CreateANewClaimToQueue(_claim);
         }
 
-        //Create Method Test
         [TestMethod]
         public void AddClaimToQueue_ShouldGetNotNull()
         {
@@ -34,7 +33,6 @@ namespace _02_Challenge2ClaimsTests
             Assert.IsNotNull(claimFromRepo);
         }
 
-        //Read Method Test
         [TestMethod]
         public void ReturnClaimQueue_ShouldBeNotNull()
         {
@@ -47,7 +45,6 @@ namespace _02_Challenge2ClaimsTests
             Assert.IsNotNull(testQueue);
         }
 
-        //Claim By Number via Queue Test
         [TestMethod]
         public void GetClaimByID_ShouldBeEqual()
         {

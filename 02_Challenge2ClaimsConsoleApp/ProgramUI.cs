@@ -1,4 +1,4 @@
-﻿  using _02_Challenge2ClaimsRepo;
+﻿using _02_Challenge2ClaimsRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,28 +30,25 @@ namespace _02_Challenge2ClaimsConsoleApp
                     "\n1. View All Claims\n" +
                     "2. Process Next Claim\n" +
                     "3. Enter a New Claim\n" +
-                    "4. Exit");
+                    "4. Exit Application\n\n" +
+                    "Please enter your selection:");
 
                 string input = Console.ReadLine();
-
                 switch (input)
                 {
                     case "1":
-                        //View All Claims
                         ViewClaimsQueue();
                         break;
                     case "2":
-                        //Process Next Claim
                         ProcessNextClaim();
                         break;
                     case "3":
-                        //Enter a New Claim
                         CreateNewClaim();
                         break;
                     case "4":
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Thank you for using Komodo Claims Department Application. Goodbye!");
+                        Console.WriteLine("Thank you for using Komodo Claims Department Application. Goodbye!\n");
                         Console.ResetColor();
                         keepRunning = false;
                         break;
@@ -71,7 +68,7 @@ namespace _02_Challenge2ClaimsConsoleApp
             Queue<Claim> queueOfClaims = _claimRepo.GetClaimQueue();
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Claim".PadRight(10) + "Type".PadRight(10) + "Description".PadRight(20) + "Amount".PadRight(15) + "dateOfAccident".PadRight(20) + "DateOfClaim".PadRight(20) + "IsValid");
+            Console.WriteLine("Claim".PadRight(10) + "Type".PadRight(10) + "Description".PadRight(20) + "Amount".PadRight(15) + "DateOfAccident".PadRight(20) + "DateOfClaim".PadRight(20) + "IsValid");
             Console.ResetColor();
 
             foreach (Claim claim in queueOfClaims)
@@ -105,10 +102,9 @@ namespace _02_Challenge2ClaimsConsoleApp
             Console.ResetColor();
 
             string dealWith = Console.ReadLine().ToLower();
-
             if (dealWith == "y")
             {
-                nextClaim = claimQueue.Dequeue();
+                claimQueue.Dequeue();
             }
         }
 
@@ -135,7 +131,9 @@ namespace _02_Challenge2ClaimsConsoleApp
 
                 if (claimNumber <= 0)
                 {
-                    Console.WriteLine("\nThe claim ID must be numeric and greater than zero.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nThe claim ID must be numeric and greater than zero.\n");
+                    Console.ResetColor();
                 }
                 else
                 {
@@ -158,23 +156,30 @@ namespace _02_Challenge2ClaimsConsoleApp
                 "For Home Enter 2\n" +
                 "For Theft Enter 3");
 
-            string input = Console.ReadLine();
-            switch (input)
+            bool errorCheck = true;
+            while (errorCheck == true)
             {
-                case "1":
-                    newClaim.ClaimType = TypeOfClaim.Car;
-                    break;
-                case "2":
-                    newClaim.ClaimType = TypeOfClaim.Home;
-                    break;
-                case "3":
-                    newClaim.ClaimType = TypeOfClaim.Theft;
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Your selection was invalid. Please enter 1, 2, or 3.");
-                    Console.ResetColor();
-                    break;
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        newClaim.ClaimType = TypeOfClaim.Car;
+                        errorCheck = false;
+                        break;
+                    case "2":
+                        newClaim.ClaimType = TypeOfClaim.Home;
+                        errorCheck = false;
+                        break;
+                    case "3":
+                        newClaim.ClaimType = TypeOfClaim.Theft;
+                        errorCheck = false;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nYour selection was invalid. Please enter 1, 2, or 3.");
+                        Console.ResetColor();
+                        break;
+                }
             }
 
             Console.WriteLine("\nEnter the claim description:");
@@ -201,7 +206,7 @@ namespace _02_Challenge2ClaimsConsoleApp
                 Console.WriteLine("\nThis claim is not valid.");
                 Console.ResetColor();
             }
-            
+
             _claimRepo.CreateANewClaimToQueue(newClaim);
 
             Console.ForegroundColor = ConsoleColor.Green;

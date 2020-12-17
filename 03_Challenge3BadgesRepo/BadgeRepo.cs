@@ -94,28 +94,6 @@ namespace _03_Challenge3BadgesRepo
             return true;
         }
 
-        //Delete Badge -- not required
-        public bool RemoveBadge(int badgeNumber) // -- may not need this, but the functionality is here
-        {
-            Badge badgeItem = GetBadgeByIDNumberTryGetValue(badgeNumber);
-            if (badgeItem == null)
-            {
-                return false;
-            }
-
-            int initialMenuItemCount = _dictionaryBadges.Count;
-            _dictionaryBadges.Remove(badgeNumber);
-
-            if (initialMenuItemCount > _dictionaryBadges.Count)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         //Get By Number
         public Badge GetBadgeByIDNumberTryGetValue(int badgeNumber)
         {

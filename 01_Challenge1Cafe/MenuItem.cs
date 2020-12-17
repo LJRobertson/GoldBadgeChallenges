@@ -11,12 +11,12 @@ namespace _01_Challenge1Cafe
         public int MealNumber { get; set; }
         public string MealName { get; set; }
         public string Description { get; set; }
-        public string Ingredients { get; set; }
+        public List<string> Ingredients { get; set; } = new List<string>();
         public double Price { get; set; }
 
         public MenuItem() { }
 
-        public MenuItem(int mealNumber, string mealName, string description, string ingredients, double price)
+        public MenuItem(int mealNumber, string mealName, string description, List<string> ingredients, double price)
         {
             MealNumber = mealNumber;
             MealName = mealName;

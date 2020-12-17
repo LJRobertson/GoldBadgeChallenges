@@ -21,7 +21,6 @@ namespace _03_Challenge3BadgesTests
             _repo.CreateNewBadge(101, _badge);
         }
 
-        //Create Test
         [TestMethod]
         public void CreateNewBadge_ShouldGetNotNull()
         {
@@ -35,12 +34,12 @@ namespace _03_Challenge3BadgesTests
             Assert.IsNotNull(badgeFromRepo);
         }
 
-        //Read Method Test
         [TestMethod]
         public void ReturnBadgeDictionary_ShouldBeNotNull()
         {
             //Arrange
             Dictionary<int, Badge> testDictionary = new Dictionary<int, Badge>();
+
             //Act
             testDictionary = _repo.GetBadges();
 
@@ -48,7 +47,6 @@ namespace _03_Challenge3BadgesTests
             Assert.IsNotNull(testDictionary);
         }
 
-        //Update Doors on a Badge Test
         [TestMethod]
         public void UpdateDoorsOnBadgeShouldBeEqual()
         {
@@ -61,7 +59,6 @@ namespace _03_Challenge3BadgesTests
             Assert.AreEqual(4, _badge.DoorNamesList.Count);
         }
 
-        //Update Select Doors
         [TestMethod]
         public void AddDoorsToBadgeShouldBeEqual()
         {
@@ -75,7 +72,6 @@ namespace _03_Challenge3BadgesTests
             Assert.AreEqual(7, _badge.DoorNamesList.Count);
         }
 
-        //Delete Method Test
         [TestMethod]
         public void DeleteDoorsFromBadgeTestShouldReturnTrue()
         {
@@ -90,7 +86,6 @@ namespace _03_Challenge3BadgesTests
             Assert.IsTrue(doorsOnBadge = true);
         }
 
-        //Delete Selected Door Method Test
         [TestMethod]
         public void RemoveSelectedDoorsFromBadgeTestShouldReturnTrue()
         {
@@ -105,7 +100,6 @@ namespace _03_Challenge3BadgesTests
             Assert.IsTrue(initialCount > resultCount);
         }
 
-        //Get By Number Method Using Try Get Value Test
         [TestMethod]
         public void GetBadgeByIDTryGetValue_ShouldBeEqual() 
         {
@@ -118,6 +112,5 @@ namespace _03_Challenge3BadgesTests
             //Assert
             Assert.AreEqual(101, badgeNumber);
         }
-
     }
 }

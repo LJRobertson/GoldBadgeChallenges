@@ -28,10 +28,10 @@ namespace _03_Challenge3BadgesConsoleApp
                     "\n1. View All Badges and Door Access\n" +
                     "2. Create a New Badge\n" +
                     "3. Update Door Access on a Badge\n" +
-                    "4. Exit");
+                    "4. Exit Application\n\n" +
+                    "Please enter your selection:");
 
                 string input = Console.ReadLine();
-
                 switch (input)
                 {
                     case "1":
@@ -46,13 +46,15 @@ namespace _03_Challenge3BadgesConsoleApp
                     case "4":
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Thank you for using Komodo Insurance Badge Door Application. Goodbye!");
+                        Console.WriteLine("Thank you for using Komodo Insurance Badge Door Application. Goodbye!\n");
                         Console.ResetColor();
 
                         keepRunning = false;
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Your selection was invalid. Please enter a valid number.");
+                        Console.ResetColor();
                         break;
                 }
                 Console.WriteLine("Please press any key to continue...");
@@ -86,18 +88,20 @@ namespace _03_Challenge3BadgesConsoleApp
             Console.Clear();
             Badge newBadge = new Badge();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Creating a New Badge\n");
+            Console.ResetColor();
+
             bool endErrorCheck = false;
             while (endErrorCheck == false)
             {
                 int badgeNumber = 0;
 
                 Console.WriteLine("Enter the new Badge ID number:");
-
                 if (int.TryParse(Console.ReadLine(), out int result) == true)
                 {
                     badgeNumber = result;
                 }
-
                 if (badgeNumber <= 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -110,7 +114,7 @@ namespace _03_Challenge3BadgesConsoleApp
                     if (tempNumber != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nThis badge number already exists.\n");
+                        Console.WriteLine("\nThis badge number already exists. Please use a different number for the new badge.\n");
                         Console.ResetColor();
                     }
                     else
@@ -130,34 +134,41 @@ namespace _03_Challenge3BadgesConsoleApp
                 newBadge.DoorNamesList.Add(door.Trim());
             }
             _badgeRepo.CreateNewBadge(newBadge.BadgeID, newBadge);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nBadge was created successfully!\n");
+            Console.ResetColor();
         }
 
-        private void UpdateDoorAccess() 
+        private void UpdateDoorAccess()
         {
             bool keepUpdateMenuRunning = true;
             while (keepUpdateMenuRunning)
             {
-
                 Console.Clear();
-                Console.WriteLine("What would you like to do?\n" +
-                    "1. Assign Doors To a Badge\n" +
-                    "2. Remove Doors From a Badge\n" +
-                    "\nOr press any other key to return to the Main Menu.");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Updating Door Access on a Badge");
+                Console.ResetColor();
+
+                Console.WriteLine("\nWhat would you like to do?\n" +
+                    "1. Assign Doors to a Badge\n" +
+                    "2. Remove Doors from a Badge\n" +
+                    "\nOr press any other key to return to the Main Menu.\n\n" +
+                    "Please enter your selection:");
 
                 string input = Console.ReadLine();
-
                 switch (input)
                 {
                     case "1":
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Updating Door Access\n");
+                        Console.WriteLine("Adding Door Access\n");
                         Console.ResetColor();
                         Console.WriteLine("Please select from the following options:\n\n" +
                             "1. Assign All New Doors to a Badge\n" +
                             "\t This will overwrite any doors currently assigned to the Badge.\n\n" +
                             "2. Add a New Door to a Badge\n" +
-                            "\t This will add a new door to a Badge. All previous door access will remain unchanged.\n");
+                            "\t This will add a new door to a Badge. All previous door access will remain unchanged.\n\n" +
+                            "Please enter your selection:");
                         string updateInput = Console.ReadLine();
                         switch (updateInput)
                         {
@@ -174,10 +185,9 @@ namespace _03_Challenge3BadgesConsoleApp
                                 if (_badgeRepo.GetBadgeByIDNumberTryGetValue(Int32.Parse(badgeID)) == null)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to previous menu...\n");
+                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to Update Door Access Menu...\n");
                                     Console.ResetColor();
                                     Console.ReadLine();
-
                                     break;
                                 }
 
@@ -200,17 +210,16 @@ namespace _03_Challenge3BadgesConsoleApp
                                 Console.WriteLine("Adding a Door to a Badge\n");
                                 Console.ResetColor();
 
-                                Console.WriteLine("The Badge will have access to all currently assigned doors plut the door(s) provided here.\n\n" +
+                                Console.WriteLine("The Badge will have access to all currently assigned doors plus the door(s) provided here.\n\n" +
                                   "Please enter the Badge ID of the Badge to be updated:\n");
                                 string badgeID2 = Console.ReadLine();
 
                                 if (_badgeRepo.GetBadgeByIDNumberTryGetValue(Int32.Parse(badgeID2)) == null)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to previous menu...\n");
+                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to the Update Door Access Menu...\n");
                                     Console.ResetColor();
                                     Console.ReadLine();
-
                                     break;
                                 }
 
@@ -264,25 +273,28 @@ namespace _03_Challenge3BadgesConsoleApp
                         "1. Remove All Doors From a Badge\n" +
                         "\t This will delete any doors currently assigned to the Badge.\n\n" +
                         "2. Remove Selected Door(s) From a Badge\n" +
-                        "\t This will remove requested door(s) from a Badge. All other door access will remain unchanged.\n");
+                        "\t This will remove requested door(s) from a Badge. All other door access will remain unchanged.\n\n" +
+                        "Please enter your selection:");
 
                         string removeInput = Console.ReadLine();
                         switch (removeInput)
                         {
                             case "1":
                                 Console.Clear();
-                                Console.WriteLine("Removing All Doors From Badge\n" +
-                                 "All door access permissions will be permanently removed from entered Badge.\n\n" +
-                                 "Please enter the Badge ID of the Badge to be updated:\n");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("Removing All Doors From Badge\n");
+                                Console.ResetColor();
+
+                                Console.WriteLine("All door access permissions will be permanently removed from entered Badge.\n\n" +
+                                 "Please enter the Badge ID of the Badge to be updated:");
                                 string badgeID = Console.ReadLine();
 
                                 if (_badgeRepo.GetBadgeByIDNumberTryGetValue(Int32.Parse(badgeID)) == null)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to previous menu...\n");
+                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to the Updating Door Access Menu...\n");
                                     Console.ResetColor();
                                     Console.ReadLine();
-
                                     break;
                                 }
 
@@ -303,16 +315,15 @@ namespace _03_Challenge3BadgesConsoleApp
                                 Console.ResetColor();
 
                                 Console.WriteLine("This will remove selected door access permissions to entered Badge. All other door access permissions will remain.\n\n" +
-                           "Please enter the Badge ID of the Badge to be updated:\n");
+                           "Please enter the Badge ID of the Badge to be updated:");
                                 string badgeID2 = Console.ReadLine();
 
                                 if (_badgeRepo.GetBadgeByIDNumberTryGetValue(Int32.Parse(badgeID2)) == null)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to previous menu...\n");
+                                    Console.WriteLine("\nThe Badge ID entered was invalid. Returning to the Updating Door Access Menu...\n");
                                     Console.ResetColor();
                                     Console.ReadLine();
-
                                     break;
                                 }
 
@@ -334,7 +345,7 @@ namespace _03_Challenge3BadgesConsoleApp
                                 if (initialDoorCount <= newDoorCount)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine($"\nError: Unable to remove door(s) from Badge {badgeID2}.\n");
+                                    Console.WriteLine($"\nError: Unable to remove door(s) from Badge {badgeID2}.\nReturning to the Updating Door Access Menu...");
                                     Console.ResetColor();
                                     Console.ReadLine();
                                     break;

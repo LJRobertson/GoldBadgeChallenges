@@ -41,5 +41,4 @@ namespace _02_Challenge2ClaimsRepo
             DateOfClaim = dateOfClaim;
         }
     }
-
 }

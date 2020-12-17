@@ -15,7 +15,7 @@ namespace _01_Challenge1CafeTests
         public void Arrange()
         {
             _repo = new MenuItemRepo();  
-            _item = new MenuItem(1, "Sub Sandwhich", "sub sandwhich and chips", "bread, turkey, cheese, lettuce, tomato", 9.95);
+            _item = new MenuItem(1, "Sub Sandwhich", "sub sandwhich and chips", new List<string> { "bread", "turkey", "cheese", "lettuce", "tomato" }, 9.95);
             
             _repo.AddMenuItemToList(_item);
         }
