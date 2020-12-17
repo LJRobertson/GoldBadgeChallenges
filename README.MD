@@ -1,6 +1,6 @@
 # GoldBadgeChallenges
 
-The objective in the Gold Badge Challenges for Eleven Fifty Academy was to make three separate programs for the fictional Komodo Insurance Company. This project was the final project for the Gold Badge in Software Development.
+The objective in the Gold Badge Challenges for Eleven Fifty Academy was to make three separate applications for the fictional Komodo Insurance Company. 
 
 ## Installation
 To install, please clone or download the repository from  [GitHub](https://https://github.com/LJRobertson/GoldBadgeChallenges).
@@ -45,4 +45,4 @@ The Exit Application on the main menu will close out of the application.
 Sole author Lindsey Robertson
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/LJRobertson/GoldBadgeChallenges/blob/main/license.MD)
