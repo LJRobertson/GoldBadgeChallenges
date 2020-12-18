@@ -102,7 +102,6 @@ namespace _01_Challenge1CafeConsoleApp
                 int menuNumber = 0;
 
                 Console.WriteLine("\nEnter the new meal number:");
-
                 if (int.TryParse(Console.ReadLine(), out int result) == true)
                 {
                     menuNumber = result;

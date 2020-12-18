@@ -128,7 +128,6 @@ namespace _03_Challenge3BadgesConsoleApp
             Console.WriteLine("\nEnter the doors for this badge to have access to. Separate each door with a comma (ie: B25, B27, C11):");
             string doorNames = Console.ReadLine();
             string[] doorArray = doorNames.Split(',');
-
             foreach (string door in doorArray)
             {
                 newBadge.DoorNamesList.Add(door.Trim());
@@ -366,7 +365,6 @@ namespace _03_Challenge3BadgesConsoleApp
                                 Console.ReadLine();
                                 break;
                         }
-
                         break;
                     default:
                         Console.WriteLine("Returning to Main Menu...");

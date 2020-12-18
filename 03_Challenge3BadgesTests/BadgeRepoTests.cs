@@ -8,7 +8,6 @@ namespace _03_Challenge3BadgesTests
     [TestClass]
     public class BadgeRepoTests
     {
-
         private BadgeRepo _repo;
         private Badge _badge;
 

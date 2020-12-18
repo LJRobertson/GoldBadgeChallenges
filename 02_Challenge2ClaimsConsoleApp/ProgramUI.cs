@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace _02_Challenge2ClaimsConsoleApp
 {
-
     class ProgramUI
     {
         private ClaimRepo _claimRepo = new ClaimRepo();
@@ -128,7 +127,6 @@ namespace _02_Challenge2ClaimsConsoleApp
                 {
                     claimNumber = result;
                 }
-
                 if (claimNumber <= 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
